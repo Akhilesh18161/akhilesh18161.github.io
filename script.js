@@ -3,28 +3,28 @@ const products = [
     {
         id: 1,
         name: "Classic Denim Jacket",
-        price: 89.99,
+        price: 8999,
         category: "women",
         rating: 4.5,
-        image: "https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=400&h=400&fit=crop",
+        image: "https://images.unsplash.com/photo-1544966503-7cc5ac882d5f?w=400&h=400&fit=crop",
         onSale: false,
         isNew: false
     },
     {
         id: 2,
         name: "Cotton T-Shirt",
-        price: 24.99,
+        price: 2499,
         category: "women",
         rating: 4.2,
         image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400&h=400&fit=crop",
         onSale: true,
-        originalPrice: 34.99,
+        originalPrice: 3499,
         isNew: false
     },
     {
         id: 3,
         name: "Summer Dress",
-        price: 79.99,
+        price: 7999,
         category: "women",
         rating: 4.8,
         image: "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&h=400&fit=crop",
@@ -34,7 +34,7 @@ const products = [
     {
         id: 4,
         name: "Leather Boots",
-        price: 149.99,
+        price: 14999,
         category: "accessories",
         rating: 4.6,
         image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
@@ -44,18 +44,18 @@ const products = [
     {
         id: 5,
         name: "Wool Sweater",
-        price: 69.99,
+        price: 6999,
         category: "men",
         rating: 4.3,
         image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400&h=400&fit=crop",
         onSale: true,
-        originalPrice: 89.99,
+        originalPrice: 8999,
         isNew: false
     },
     {
         id: 6,
         name: "Casual Sneakers",
-        price: 99.99,
+        price: 9999,
         category: "men",
         rating: 4.4,
         image: "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&h=400&fit=crop",
@@ -65,7 +65,7 @@ const products = [
     {
         id: 7,
         name: "Designer Handbag",
-        price: 199.99,
+        price: 19999,
         category: "accessories",
         rating: 4.7,
         image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop",
@@ -75,12 +75,12 @@ const products = [
     {
         id: 8,
         name: "Silk Blouse",
-        price: 89.99,
+        price: 8999,
         category: "women",
         rating: 4.5,
         image: "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&h=400&fit=crop",
         onSale: true,
-        originalPrice: 119.99,
+        originalPrice: 11999,
         isNew: false
     }
 ];
@@ -108,6 +108,19 @@ const searchResults = document.getElementById('search-results');
 const filterBtns = document.querySelectorAll('.filter-btn');
 const sortSelect = document.getElementById('sort-select');
 const searchIcon = document.querySelector('.fa-search');
+const profileIcon = document.getElementById('profile-icon');
+const profileDropdown = document.querySelector('.profile-dropdown');
+const profileDropdownContent = document.querySelector('.profile-dropdown-content');
+const loginModal = document.getElementById('login-modal');
+const signupModal = document.getElementById('signup-modal');
+const loginClose = document.getElementById('login-close');
+const signupClose = document.getElementById('signup-close');
+const loginLink = document.getElementById('login-link');
+const signupLink = document.getElementById('signup-link');
+const switchToSignup = document.getElementById('switch-to-signup');
+const switchToLogin = document.getElementById('switch-to-login');
+const loginForm = document.getElementById('login-form');
+const signupForm = document.getElementById('signup-form');
 
 // Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
@@ -117,6 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeFilters();
     initializeSearch();
     initializeNewsletter();
+    initializeAuth();
 });
 
 // Display products with enhanced features
@@ -134,7 +148,7 @@ function displayProducts(productsToShow = filteredProducts) {
         
         const saleTag = product.onSale ? `<div class="sale-tag">Sale</div>` : '';
         const newTag = product.isNew ? `<div class="new-tag">New</div>` : '';
-        const originalPrice = product.onSale ? `<span class="original-price">$${product.originalPrice}</span>` : '';
+        const originalPrice = product.onSale ? `<span class="original-price">रु${product.originalPrice}</span>` : '';
         const stars = generateStars(product.rating);
         
         productCard.innerHTML = `
@@ -145,7 +159,7 @@ function displayProducts(productsToShow = filteredProducts) {
                 <h3 class="product-title">${product.name}</h3>
                 <div class="product-rating">${stars} <span class="rating-text">(${product.rating})</span></div>
                 <div class="price-container">
-                    <p class="product-price">$${product.price}</p>
+                    <p class="product-price">रु${product.price}</p>
                     ${originalPrice}
                 </div>
                 <button class="add-to-cart" onclick="addToCart(${product.id})">
@@ -234,11 +248,13 @@ function applyFilters() {
 function initializeSearch() {
     searchIcon.addEventListener('click', () => {
         searchModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
         searchInput.focus();
     });
     
     searchClose.addEventListener('click', () => {
         searchModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore background scrolling
         searchInput.value = '';
         searchResults.innerHTML = '';
     });
@@ -262,6 +278,7 @@ function initializeSearch() {
     window.addEventListener('click', (e) => {
         if (e.target === searchModal) {
             searchModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
             searchInput.value = '';
             searchResults.innerHTML = '';
         }
@@ -283,7 +300,7 @@ function displaySearchResults(results) {
             <img src="${product.image}" alt="${product.name}">
             <div class="result-info">
                 <h4>${product.name}</h4>
-                <p>$${product.price}</p>
+                <p>रु${product.price}</p>
             </div>
             <button onclick="addToCart(${product.id}); closeSearchModal();">Add to Cart</button>
         `;
@@ -337,7 +354,7 @@ function updateCartUI() {
     const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
     
     cartCount.textContent = totalItems;
-    cartTotal.textContent = totalPrice.toFixed(2);
+    cartTotal.textContent = totalPrice.toFixed(0);
 }
 
 function displayCartItems() {
@@ -356,7 +373,7 @@ function displayCartItems() {
                 <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                 <div>
                     <h4>${item.name}</h4>
-                    <p>$${item.price} × ${item.quantity}</p>
+                    <p>रु${item.price} × ${item.quantity}</p>
                 </div>
             </div>
             <button onclick="removeFromCart(${item.id})" class="remove-btn">
@@ -402,6 +419,158 @@ function showNotification(message, type = 'success') {
     }, 3000);
 }
 
+// Authentication functionality
+function initializeAuth() {
+    // Profile dropdown click functionality
+    let isDropdownActive = false;
+    
+    profileIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isDropdownActive = !isDropdownActive;
+        
+        if (isDropdownActive) {
+            profileDropdown.classList.add('active');
+        } else {
+            profileDropdown.classList.remove('active');
+        }
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!profileDropdown.contains(e.target)) {
+            isDropdownActive = false;
+            profileDropdown.classList.remove('active');
+        }
+    });
+    
+    // Prevent dropdown from closing when clicking inside it
+    profileDropdownContent.addEventListener('click', (e) => {
+        e.stopPropagation();
+    });
+    
+    // Login modal event listeners
+    loginLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        // Close profile dropdown when opening modal
+        isDropdownActive = false;
+        profileDropdown.classList.remove('active');
+    });
+    
+    loginClose.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore background scrolling
+    });
+    
+    // Signup modal event listeners
+    signupLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        // Close profile dropdown when opening modal
+        isDropdownActive = false;
+        profileDropdown.classList.remove('active');
+    });
+    
+    signupClose.addEventListener('click', () => {
+        signupModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore background scrolling
+    });
+    
+    // Switch between login and signup
+    switchToSignup.addEventListener('click', (e) => {
+        e.preventDefault();
+        loginModal.style.display = 'none';
+        signupModal.style.display = 'block';
+        // Background scrolling already prevented from login modal
+    });
+    
+    switchToLogin.addEventListener('click', (e) => {
+        e.preventDefault();
+        signupModal.style.display = 'none';
+        loginModal.style.display = 'block';
+        // Background scrolling already prevented from signup modal
+    });
+    
+    // Form submissions
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        
+        // Simulate login process
+        if (email && password) {
+            showNotification('Login successful! Welcome back.');
+            loginModal.style.display = 'none';
+            loginForm.reset();
+            updateProfileUI(email);
+        } else {
+            showNotification('Please fill in all fields.', 'error');
+        }
+    });
+    
+    signupForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = document.getElementById('signup-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const confirm = document.getElementById('signup-confirm').value;
+        
+        // Basic validation
+        if (!name || !email || !password || !confirm) {
+            showNotification('Please fill in all fields.', 'error');
+            return;
+        }
+        
+        if (password !== confirm) {
+            showNotification('Passwords do not match.', 'error');
+            return;
+        }
+        
+        if (password.length < 6) {
+            showNotification('Password must be at least 6 characters.', 'error');
+            return;
+        }
+        
+        // Simulate signup process
+        showNotification('Account created successfully! Welcome to StyleHub.');
+        signupModal.style.display = 'none';
+        signupForm.reset();
+        updateProfileUI(email);
+    });
+    
+    // Close modals when clicking outside
+    window.addEventListener('click', (e) => {
+        if (e.target === loginModal) {
+            loginModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
+        }
+        if (e.target === signupModal) {
+            signupModal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore background scrolling
+        }
+    });
+}
+
+function updateProfileUI(email) {
+    // Update profile dropdown to show logged in state
+    const profileSection = document.querySelector('.profile-section');
+    if (profileSection) {
+        profileSection.innerHTML = `
+            <h4>Welcome, ${email.split('@')[0]}</h4>
+            <a href="#logout" id="logout-link">Log Out</a>
+        `;
+        
+        // Add logout functionality
+        document.getElementById('logout-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            showNotification('Logged out successfully.');
+            location.reload(); // Simple way to reset the UI
+        });
+    }
+}
+
 // Theme toggle functionality
 function initializeTheme() {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -429,16 +598,19 @@ function updateThemeIcon(theme) {
 // Event listeners
 cartIcon.addEventListener('click', () => {
     cartModal.style.display = 'block';
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
     displayCartItems();
 });
 
 closeModal.addEventListener('click', () => {
     cartModal.style.display = 'none';
+    document.body.style.overflow = 'auto'; // Restore background scrolling
 });
 
 window.addEventListener('click', (e) => {
     if (e.target === cartModal) {
         cartModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Restore background scrolling
     }
 });
 

@@ -88,7 +88,27 @@
                         <i class="fas fa-moon" id="theme-icon"></i>
                     </button>
                     <i class="fas fa-search"></i>
-                    <i class="fas fa-user"></i>
+                    <div class="profile-dropdown">
+                        <i class="fas fa-user" id="profile-icon"></i>
+                        <div class="profile-dropdown-content">
+                            <div class="profile-section">
+                                <h4>Account</h4>
+                                <a href="#login" id="login-link">Log In</a>
+                                <a href="#signup" id="signup-link">Sign Up</a>
+                            </div>
+                            <div class="profile-section">
+                                <h4>My Account</h4>
+                                <a href="#orders">My Orders</a>
+                                <a href="#wishlist">Wishlist</a>
+                                <a href="#profile">Profile Settings</a>
+                            </div>
+                            <div class="profile-section">
+                                <h4>Help</h4>
+                                <a href="#support">Customer Support</a>
+                                <a href="#returns">Returns & Exchanges</a>
+                            </div>
+                        </div>
+                    </div>
                     <i class="fas fa-shopping-cart" id="cart-icon">
                         <span class="cart-count">0</span>
                     </i>
@@ -189,7 +209,7 @@
                     <div class="service-item">
                         <i class="fas fa-shipping-fast"></i>
                         <h3>Free Shipping</h3>
-                        <p>Free shipping on orders over $89</p>
+                        <p>Free shipping on orders over रु8900</p>
                     </div>
                     <div class="service-item">
                         <i class="fas fa-undo"></i>
@@ -257,7 +277,7 @@
             <h2>Shopping Cart</h2>
             <div id="cart-items"></div>
             <div class="cart-total">
-                <strong>Total: $<span id="cart-total">0.00</span></strong>
+                <strong>Total: रु<span id="cart-total">0</span></strong>
             </div>
             <button class="checkout-btn">Checkout</button>
         </div>
@@ -270,6 +290,61 @@
             <h2>Search Products</h2>
             <input type="text" class="search-input" id="search-input" placeholder="Search for products...">
             <div id="search-results"></div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close" id="login-close">&times;</span>
+            <h2>Log In</h2>
+            <form class="auth-form" id="login-form">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" required>
+                </div>
+                <div class="forgot-password">
+                    <a href="#forgot">Forgot your password?</a>
+                </div>
+                <button type="submit" class="auth-btn">Log In</button>
+            </form>
+            <div class="auth-switch">
+                Don't have an account? <a href="#" id="switch-to-signup">Sign up</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close" id="signup-close">&times;</span>
+            <h2>Sign Up</h2>
+            <form class="auth-form" id="signup-form">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input type="text" id="signup-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input type="email" id="signup-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input type="password" id="signup-confirm" name="confirm" required>
+                </div>
+                <button type="submit" class="auth-btn">Sign Up</button>
+            </form>
+            <div class="auth-switch">
+                Already have an account? <a href="#" id="switch-to-login">Log in</a>
+            </div>
         </div>
     </div>
 
